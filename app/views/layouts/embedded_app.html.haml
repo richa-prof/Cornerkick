@@ -20,7 +20,7 @@
         api_key: ShopifyApp.configuration.api_key,                        |
         shop_origin: ("https://#{ @shop_session.url }" if @shop_session), |
         debug: Rails.env.development?                                     |
-      } )
+      } )                                                                 |
     - if content_for?(:javascript)
       #ContentForJavascript{"data-turbolinks-temporary" => ""}
         = yield :javascript

@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'shopify_app', '~> 9.0.4'
 
-gem 'haml', '~> 5.0.0'
+gem 'haml', '~> 5.1.0'
 gem 'haml-rails', '~> 2.0'
 
 gem 'devise', '~> 4.6.2'
