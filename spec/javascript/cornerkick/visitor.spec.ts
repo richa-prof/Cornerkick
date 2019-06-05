@@ -2,14 +2,15 @@ import {Visitor} from "cornerkick/visitor";
 import * as Cookies from 'js-cookie';
 import * as uuid from 'uuid';
 
+jest.mock('uuid');
+jest.mock('js-cookie');
+
 
 describe('Visitor', () => {
     describe('loadVisitor', () => {
         describe('previously unseen visitor', () => {
             beforeEach(() => {
-                spyOn(Cookies, 'get').and.returnValue(undefined);
-                spyOn(Cookies, 'set');
-                spyOn(uuid, 'v4').and.returnValue('generated-uuid');
+                uuid.v4.mockReturnValueOnce('generated-uuid');
             });
 
             it('generates a new fingerprint cookie for new visitors', () => {
@@ -20,8 +21,8 @@ describe('Visitor', () => {
 
         describe('seen visitor', () => {
             beforeEach(() => {
-                spyOn(Cookies, 'get').and.returnValue('seen-visitor-fingerprint');
-                spyOn(uuid, 'v4');
+                uuid.v4.mockReturnValue('generated-uuid');
+                Cookies.get.mockReturnValueOnce('seen-visitor-fingerprint');
             });
 
             it('generates a new fingerprint cookie for new visitors', () => {

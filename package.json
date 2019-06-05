@@ -20,6 +20,7 @@
     "webpack-dev-server": "^3.5.1"
   },
   "jest": {
+    "clearMocks": true,
     "roots": [
       "spec/javascript"
     ],
