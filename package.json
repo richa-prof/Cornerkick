@@ -17,7 +17,11 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.13",
     "jest": "^24.8.0",
+    "uglify-js": "^3.6.0",
     "webpack-dev-server": "^3.5.1"
+  },
+  "scripts": {
+    "build-snippet": "uglifyjs -c -m -b -o public/snippet.min.js -- app/javascript/snippet.js"
   },
   "jest": {
     "clearMocks": true,
