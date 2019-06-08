@@ -1,0 +1,138 @@
+// Place all the styles related to the mockup controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+///* HSL */
+//$color1: hsla(212%, 14%, 19%, 1);
+//$color2: hsla(176%, 56%, 55%, 1);
+//$color3: hsla(205%, 42%, 45%, 1);
+//$color4: hsla(0%, 2%, 80%, 1);
+//$color5: hsla(0%, 0%, 99%, 1);
+
+/* RGB */
+/* Gunmetal #292F36 */
+$gunmetal: rgba(41, 47, 54, 1);
+/* Medium Turquise #4ECDC4 */
+$turquoise: rgba(78, 205, 196, 1);
+/* Queen Blue #427AA1 */
+$queen-blue: rgba(66, 122, 161, 1);
+/* Pastel Gray #CECCCC */
+$pastel-gray: rgba(206, 204, 204, 1);
+/* Baby Powder #FCFCFC */
+$baby-powder: rgba(252, 252, 252, 1);
+
+$text-primary: black;
+$text-secondary: white;
+$text-tertiary: white;
+$text-fourth: white;
+
+$bg-primary: $baby-powder;
+$bg-secondary: $queen-blue;
+$bg-tertiary: $gunmetal;
+$bg-fourth: $turquoise;
+
+body {
+  background-color: $pastel-gray;
+}
+
+.logo {
+  grid-area: logo;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.sidebar2 {
+  grid-area: sidebar2;
+}
+
+.content {
+  grid-area: content;
+}
+
+.header {
+  grid-area: header;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.display {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-areas:
+          "header"
+          "sidebar"
+          "content"
+          "sidebar2"
+          "footer"
+}
+
+@media only screen and (min-width: 500px)  {
+  .display {
+
+    grid-template-columns: 20% auto;
+    grid-template-areas:
+            "logo     header"
+            "sidebar  content"
+            "sidebar2 sidebar2"
+            "footer   footer";
+  }
+}
+
+@media only screen and (min-width: 600px)   {
+  .display {
+    grid-gap: 0;
+    grid-template-columns: 220px auto 120px;
+    grid-template-rows: 75px auto 100px;
+    grid-template-areas:
+            "logo    header  header"
+            "sidebar content content"
+            "sidebar footer  footer";
+    height: 100%;
+  }
+
+  .sidebar {
+    min-height: 100vh;
+  }
+}
+
+.logo {
+  background-color: $bg-fourth;
+  color: $text-fourth;
+}
+
+.sidebar {
+  background-color: $bg-tertiary;
+  color: $text-tertiary;
+}
+
+.sidebar2 {
+}
+
+.content {
+  background-color: $bg-primary;
+  color: $text-primary;
+}
+
+.header {
+  background-color: $bg-secondary;
+  color: $text-secondary;
+}
+
+.footer {
+}
+
+.display {
+  background-color: $pastel-gray;
+  color: #444;
+}
+
+

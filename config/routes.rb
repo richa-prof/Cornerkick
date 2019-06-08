@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'mockup/mockup'
   devise_for :users
   root :to => 'home#index'
   mount ShopifyApp::Engine, at: '/'
