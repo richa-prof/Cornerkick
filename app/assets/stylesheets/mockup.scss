@@ -135,4 +135,32 @@ body {
   color: #444;
 }
 
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+      background-color: pink;
+      color: $text-tertiary;
+      display: block;
+      margin: 0;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+
+      &.open {
+        background-color: papayawhip;
+      }
+
+      &:hover {
+        background-color: $bg-fourth;
+      }
+    }
+  }
+}
 

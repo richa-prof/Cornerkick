@@ -4,7 +4,17 @@
   .header
     %p I'm the header
   .sidebar
-    %p I'm the sidebar
+    %nav
+      %ul
+        %li{href: '#'}
+          %a
+            Dashboard
+        %li
+          %a{href: '#'}
+            Pages
+        %li
+          %a.open{href: '#'}
+            Visitors
   .content
     %p I'm the content
     %p Find me in app/views/mockup/mockup.html.haml
