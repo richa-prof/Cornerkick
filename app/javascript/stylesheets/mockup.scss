@@ -41,16 +41,17 @@ body {
   background-color: $pastel-gray;
 }
 
+.menu {
+  grid-area: menu;
+}
+
 .logo {
   grid-area: logo;
 }
 
 .sidebar {
   grid-area: sidebar;
-}
-
-.sidebar2 {
-  grid-area: sidebar2;
+  display: none;
 }
 
 .content {
@@ -67,13 +68,29 @@ body {
 
 .display {
   display: grid;
-  grid-gap: 1em;
+  grid-gap: 0;
+  grid-template-columns: 50px auto;
+  grid-template-rows: 50px 50px auto 100px;
   grid-template-areas:
-          "header"
-          "sidebar"
-          "content"
-          "sidebar2"
-          "footer"
+          "menu     logo"
+          "header   header"
+          "content  content"
+          "footer   footer"
+}
+
+.menu {
+  background-color: $bg-fourth;
+  color: $text-fourth;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  a.menu-button {
+    display: block;
+    color: $text-fourth;
+
+  }
 }
 
 @media only screen and (min-width: 500px)  {
@@ -81,10 +98,14 @@ body {
 
     grid-template-columns: 20% auto;
     grid-template-areas:
-            "logo     header"
-            "sidebar  content"
-            "sidebar2 sidebar2"
-            "footer   footer";
+            "menu       logo"
+            "header     header"
+            "sidebar    content"
+            "footer     footer";
+  }
+
+  .sidebar {
+    display: block;
   }
 }
 
@@ -98,6 +119,10 @@ body {
             "sidebar content content"
             "sidebar footer  footer";
     height: 100%;
+  }
+
+  .menu {
+    display: none;
   }
 
   .sidebar {
