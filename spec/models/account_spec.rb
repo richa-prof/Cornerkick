@@ -10,7 +10,7 @@ RSpec.describe Account, type: :model do
     end
   end
   context 'with basic attributes' do
-    let(:basic_params) { { name: 'Uno' } }
+    let(:basic_params) {{name: 'Uno'}}
     it 'creates successfully' do
       a = Account.new(basic_params)
       expect(a.save).to eq true
