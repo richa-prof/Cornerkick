@@ -7,11 +7,11 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    user.site_admin?
   end
 
   def show?
-    false
+    scope.where(id: record.id).exists?
   end
 
   def create?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    user.site_admin?
   end
 
   def edit?
@@ -32,6 +32,10 @@ class ApplicationPolicy
 
   def destroy?
     false
+  end
+
+  def scope
+    Pundit.policy_scope!(user, record.class)
   end
 
   class Scope

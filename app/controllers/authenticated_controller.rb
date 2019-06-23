@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class ShopifyAuthenticatedController < ApplicationController
+class AuthenticatedController < ApplicationController
   include ShopifyApp::Authenticated
 end
