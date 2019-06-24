@@ -1,0 +1,119 @@
+!!!
+%html
+  %head
+    %title Cornerkick
+    %link{href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', rel: 'stylesheet', integrity: 'sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN', crossorigin: 'anonymous'}
+    %link{href: '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', rel: 'stylesheet'}
+    %link{href: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css', rel: 'stylesheet'}
+    = stylesheet_link_tag    'application', media: 'all'
+
+    %script{crossorigin: 'anonymous', integrity: 'sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', src: 'https://code.jquery.com/jquery-3.2.1.min.js'}
+    %script{crossorigin: 'anonymous', integrity: 'sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=', src: 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'}
+    %script{crossorigin: 'anonymous', integrity: 'sha256-+mWd/G69S4qtgPowSELIeVAv7+FuL871WXaolgXnrwQ=', src: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js'}
+    %script{crossorigin: 'anonymous', integrity: 'sha256-gL1ibrbVcRIHKlCO5OXOPC/lZz/gpdApgQAzskqqXp8=', src: 'https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'}
+    %script{crossorigin: 'anonymous', integrity: 'sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'}
+
+    = javascript_pack_tag 'application'
+    = csrf_meta_tags
+
+  %body.app.header-fixed.aside-menu-fixed.aside-menu-hidden
+    %header.app-header.navbar
+      %button.navbar-toggler.mobile-sidebar-toggler.hidden-lg-up{type: 'button'} ☰
+      %a.navbar-brand{href: root_path}
+        %i.fa.fa-soccer-ball-o.fa-lg
+        CORNERKICK
+      %ul.nav.navbar-nav.hidden-md-down
+        %li.nav-item
+          %a.nav-link.navbar-toggler.sidebar-toggler{:href => '#'} ☰
+
+      - if user_signed_in?
+        %ul.nav.navbar-nav.ml-auto
+          %li.nav-item.dropdown.hidden-md-down
+            %a.nav-link
+              %i.fa.fa-bell-o
+              %span.badge.badge-pill.badge-danger 5
+          %li.nav-item.dropdown
+            %a.nav-link.dropdown-toggle.nav-link{href: '#', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } }
+              %span.hidden-md-down
+                = current_user.email
+            .dropdown-menu.dropdown-menu-right
+              - if current_user.site_admin?
+                .dropdown-header.text-center
+                  %strong Admin
+                %a.dropdown-item{href: admin_accounts_path}
+                  %i.fa.fa-tachometer
+                  Accounts
+                %a.dropdown-item{href: admin_groups_path}
+                  %i.fa.fa-tachometer
+                  Groups
+                %a.dropdown-item{href: admin_trackers_path}
+                  %i.fa.fa-tachometer
+                  Trackers
+                %a.dropdown-item{href: admin_contacts_path}
+                  %i.fa.fa-user
+                  Contacts
+                %a.dropdown-item{href: admin_users_path}
+                  %i.fa.fa-user
+                  Users
+
+              .dropdown-header.text-center
+                %strong Profile
+              %a.dropdown-item{href: current_account_accounts_path}
+                %i.fa.fa-lock
+                Switch Accounts
+              %a.dropdown-item{href: destroy_user_session_path, data: { method: :delete } }
+                %i.fa.fa-lock
+                Logout
+          %li.nav-item.hidden-md-down
+            %a.nav-link.navbar-toggler.aside-menu-toggler{href: '#'} ☰
+
+
+
+
+    .app-body
+      .sidebar
+        %nav.sidebar-nav
+          %ul.nav
+            = yield :sidebar_nav
+            = yield :sidebar_subnav
+
+      %main.main
+        = yield :breadcrumb
+
+        .container-fluid
+          - if flash[:success]
+            .flash.row
+              .col
+                .card.card-success
+                  .card-block
+                    = flash[:success]
+          - if notice
+            .flash.row
+              .col
+                .card.card-info.card-inverse
+                  .card-block
+                    = notice
+
+          = yield
+
+      %aside.aside-menu
+        .callout.m-0.py-h.text-muted.text-center.bg-faded.text-uppercase
+          %small
+            %b Today
+        %hr.transparent.mx-1.my-0
+        .callout.callout-warning.m-0.py-1
+          %div
+            Meeting
+          %small.text-muted.mr-1
+            %i.fa.fa-calendar
+            1 - 3pm
+          %small.text-muted
+            %i.fa.fa-map-pin
+              Portland, OR
+
+
+    %footer.app-footer
+      © 2019
+      %span.float-right
+        Powered by Cornerkick
+        = Cornerkick::VERSION
