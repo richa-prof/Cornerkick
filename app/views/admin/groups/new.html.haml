@@ -1,0 +1,26 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_groups_path} Groups
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_group_path}
+          %i.fa.fa-user-plus
+          Create Group
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+-# content_for :sidebar_subnav do
+
+#groups-new
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          New Group
+        .card-block
+          = render 'form'

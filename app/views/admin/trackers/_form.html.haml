@@ -1,0 +1,17 @@
+- url = if @tracker.id.nil? then admin_trackers_path else admin_tracker_path(@tracker) end
+= form_for @tracker, url: url do |f|
+  - if @tracker.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@tracker.errors.count, "error")} prohibited this tracker from being saved:"
+      %ul
+        - @tracker.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :identifier
+    = f.text_field :identifier, class: 'form-control'
+  %fieldset.form-group
+    = f.label :account_id, 'Account'
+    = f.collection_select(:account_id, Account.all, :id, :name, {}, class: 'form-control')
+  .actions
+    = f.submit 'Save'

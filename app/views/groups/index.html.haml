@@ -1,0 +1,38 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Groups
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_group_path(@account)}
+          %i.fa.fa-user-plus
+          Create Group
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-groups-index', @groups, params[:page]] do
+  #groups-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table#groups.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Name
+                  %th Description
+                  %th
+
+              %tbody
+                - @groups.each do |group|
+                  %tr
+                    %td= link_to group.name, account_group_path(@account, group)
+                    %td= group.description
+                    %td
+                      %a{href: edit_account_group_path(@account, group)}
+                        %i.fa.fa-lg.fa-pencil-square-o
+                      %a{href: account_group_path(@account, group), data: { confirm: 'Are you sure?', method: :delete } }
+                        %i.fa.fa-lg.fa-minus-square-o

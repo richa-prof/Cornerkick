@@ -43,7 +43,7 @@ module Collect
           .node_properties(params['np'])
           .build
 
-      send_data PIXEL_IMG, type: 'image/png', disposition: 'inline'
+      send_data Cornerkick::PIXEL_IMG, type: 'image/png', disposition: 'inline'
     end
 
     def submission;

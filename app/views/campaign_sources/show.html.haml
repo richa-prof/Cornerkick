@@ -1,0 +1,24 @@
+- content_for :breadcrumb do
+  - cache ['campaign-source-breadcrumb', @campaign] do
+    = render 'breadcrumb'
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-campaign-sources-show', @campaign_source] do
+  #campaign-sources-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Campaign Source
+          .card-block
+            %p
+              %b Name:
+              = @campaign_source.name
+
+          .card-footer
+            = link_to 'Edit', edit_account_campaign_campaign_source_path(@campaign.account, @campaign, @campaign_source)
+            \|
+            = link_to 'Back', account_campaign_path(@campaign.account, @campaign)

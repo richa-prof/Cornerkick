@@ -1,0 +1,24 @@
+%li.nav-title
+  %i.fa.fa-bullseye.fa-lg
+  Cornerkick
+%li.nav-item
+  %a.nav-link{href: dashboard_account_path(@current_account)}
+    %i.fa.fa-tachometer
+    Dashboard
+  %li.nav-item
+    %a.nav-link{href: account_campaigns_path(@current_account)}
+      %i.fa.fa-bullhorn
+      Campaigns
+  %li.nav-item
+    %a.nav-link{href: account_contacts_path(@current_account)}
+      %i.fa.fa-users
+      Contacts
+  %li.nav-item
+    %a.nav-link{href: account_groups_path(@current_account)}
+      %i.fa.fa-th-list
+      Groups
+  %li.nav-item
+    %a.nav-link{href: account_detectors_path(@current_account)}
+      %i.fa.fa-eye
+      Detectors
+  %li.divider

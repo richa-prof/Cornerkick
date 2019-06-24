@@ -1,0 +1,32 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_accounts_path} Accounts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_account_path}
+          %i.fa.fa-user-plus
+          Create Account
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+
+- cache ['accounts-show', @account] do
+  #accounts-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Account
+          .card-block
+            %p
+              %b Name:
+              = @account.name
+          .card-footer
+            = link_to 'Edit', edit_admin_account_path(@account)
+            \|
+            = link_to 'Back', admin_accounts_path

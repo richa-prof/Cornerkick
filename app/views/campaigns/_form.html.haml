@@ -1,0 +1,23 @@
+- url = if @campaign.id.nil? then account_campaigns_path(@account) else account_campaign_path(@account, @campaign) end
+= form_for @campaign, url: url do |f|
+  - if @campaign.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@campaign.errors.count, "error")} prohibited this campaign from being saved:"
+      %ul
+        - @campaign.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :active
+    = f.check_box :active, class: 'form-control'
+  %fieldset.form-group
+    = f.label :started_at
+    = f.datetime_select :started_at, class: 'form-control'
+  %fieldset.form-group
+    = f.label :ended_at
+    = f.datetime_select :ended_at, class: 'form-control'
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,23 @@
+- url = if @user.id.nil? then admin_users_path else admin_user_path(@user) end
+= form_for @user, url: url do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control'
+  %fieldset.form-group
+    = f.label :first_name
+    = f.text_field :first_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :site_admin
+    = f.check_box :site_admin, class: 'form-control'
+  .actions
+    = f.submit 'Save'

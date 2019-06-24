@@ -1,0 +1,55 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Contacts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_contact_path(@account)}
+          %i.fa.fa-user-plus
+          Create Contact
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-contacts-index', @contacts, params[:page]] do
+  #contacts-index
+    .row
+      .col-md-12
+        .card
+          .card-block
+            = form_tag account_contacts_path(@account), method: 'get' do
+              .input-group
+                %input.form-control{name: 'q', type: 'text', placeholder: 'filter'}
+                %span.input-group-btn
+                  %button.btn.btn-primary{type: 'submit'}
+                    %i.fa.fa-search
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table#contacts.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Contact
+                  %th Email
+                  %th Phone
+                  %th
+
+              %tbody
+                - @contacts.each do |contact|
+                  - cache ['contacts-index', contact] do
+                    %tr
+                      %td= link_to contact.display_name, account_contact_path(@account, contact)
+                      %td= contact.email
+                      %td= contact.phone
+                      %td
+                        %a{href: edit_account_contact_path(@account, contact)}
+                          %i.fa.fa-lg.fa-pencil-square-o
+                        %a{href: account_contact_path(@account, contact), data: { confirm: 'Are you sure?', method: :delete } }
+                          %i.fa.fa-lg.fa-minus-square-o
+
+          .card-footer
+            = paginate @contacts
+

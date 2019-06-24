@@ -1,0 +1,42 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_accounts_path} Accounts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_account_path}
+          %i.fa.fa-user-plus
+          Create Account
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+-# content_for :sidebar_subnav do
+- cache ['accounts-index', @accounts, params[:page]] do
+  #accounts-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Name
+                  %th
+                  %th
+                  %th
+
+              %tbody
+                - @accounts.each do |account|
+                  - cache ['accounts-index', account] do
+                    %tr
+                      %td= account.name
+                      %td= link_to 'Show', admin_account_path(account)
+                      %td= link_to 'Edit', edit_admin_account_path(account)
+                      %td= link_to 'Destroy', admin_account_path(account), method: :delete, data: { confirm: 'Are you sure?' }
+
+          .card-footer
+            = paginate @accounts

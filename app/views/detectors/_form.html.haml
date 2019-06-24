@@ -1,0 +1,20 @@
+- url = if @detector.id.nil? then account_detectors_path(@account) else account_detector_path(@account, @detector) end
+= form_for @detector, url: url do |f|
+  - if @detector.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@detector.errors.count, "error")} prohibited this detector from being saved:"
+      %ul
+        - @detector.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :description
+    = f.text_area :description, class: 'form-control'
+  %fieldset.form-group
+    = f.label :active
+    = f.check_box :active, class: 'form-control'
+  .actions
+    = f.submit 'Save'

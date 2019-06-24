@@ -1,0 +1,103 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Contacts
+    %li.breadcrumb-item= @contact.display_name
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_contact_path(@account)}
+          %i.fa.fa-user-plus
+          Create Contact
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-contacts-show', @contact, params[:page]] do
+  #contacts-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            %h4= @contact.display_name
+          .card-block
+            .row
+              .col-3
+                %label Email
+              .col-9
+                %span= @contact.email
+            .row
+              .col-3
+                %label Phone
+              .col-9
+                %span= @contact.phone
+            .row
+              .col-md-12
+                - @contact.groups.each do |g|
+                  %span.badge.badge-danger= g.name
+          .card-footer
+            = link_to 'Edit', edit_account_contact_path(@account, @contact)
+            \|
+            = link_to 'Back', account_contacts_path(@account)
+      .col-md-3
+        .card
+          .card-header.card-header-inverse.card-header-success
+            .font-weight-bold
+              %span Last Visit
+              %span.float-right
+                = @contact.last_seen
+            %div
+              %span
+                %small
+                  First Visit
+              %span.float-right
+                %small
+                  = @contact.first_seen
+          .card-block.py-0.px-2.b-t-1
+            .row
+              .col-6.b-r-1.py-1
+                .font-weight-bold
+                  = @contact.visit_count
+                .text-muted
+                  %small Visits
+              .col-6.py-1.text-right
+                .font-weight-bold
+                  = @contact.click_count
+                .text-muted
+                  %small Clicks
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-header
+            %h4 Events
+          .card-block
+            %table#contact-visits.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Time
+                  %th Type
+                  %th URL
+                  %th Title
+                %tr
+              %tbody
+                - @contact.events.each do |e|
+                  %tr
+                    %td= e.created_at
+                    %td
+                      = e.event_type
+                    %td
+                      = e.url
+                      %br
+                      %em
+                        Referer:
+                        = e.referrer
+                      %br
+                      %em
+                        IP:
+                        = e.ip_address.ip_address
+                      %br
+                      %em
+                        User Agent
+                        = e.browser.user_agent
+                    %td= e.title

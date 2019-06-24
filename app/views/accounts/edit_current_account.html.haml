@@ -1,0 +1,24 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Current Account
+
+- content_for :sidebar_nav do
+  = render 'shared/main_sidebar_nav'
+
+#account-current-account
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+        .card-block
+          = form_tag current_account_accounts_path, method: 'put' do
+
+            %fieldset.form-group
+              %label{for: 'account-select'} Account
+              %select#account-select.form-control{name:'account'}
+                - @accounts.each do |account|
+                  %option{value: account.id, selected: account.id == @current_account.id}= account.name
+
+            .actions
+              = submit_tag 'Save'
+

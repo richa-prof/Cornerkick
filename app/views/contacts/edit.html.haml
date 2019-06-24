@@ -1,0 +1,22 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Contacts
+
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+
+#contacts-edit
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Show', account_contact_path(@account, @contact)
+          \|
+          = link_to 'Back', account_contacts_path(@account)

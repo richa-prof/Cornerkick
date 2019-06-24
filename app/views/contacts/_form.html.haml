@@ -1,0 +1,27 @@
+- url = if @contact.id.nil? then account_contacts_path(@account) else account_contact_path(@account, @contact) end
+= form_for @contact, url: url do |f|
+  - if @contact.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@contact.errors.count, "error")} prohibited this contact from being saved:"
+      %ul
+        - @contact.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :first_name
+    = f.text_field :first_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control'
+  %fieldset.form-group
+    = f.label :phone
+    = f.text_field :phone, class: 'form-control'
+  %fieldset.form-group
+    %label{for: 'contact_group_names'} Groups
+    = select_tag 'contact[group_names]', options_from_collection_for_select(@account.groups, 'name', 'name', @contact.group_names), multiple: true, class: 'form-control select-groups', data: { tags: 'true' }
+
+  .actions
+    = f.submit 'Save'

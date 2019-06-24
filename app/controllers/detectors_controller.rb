@@ -30,7 +30,7 @@ class DetectorsController < CornerkickController
     authorize @detector
 
     if @detector.save
-      redirect_to cornerkick.account_detector_path(@account, @detector), notice: 'Detector was successfully created.'
+      redirect_to account_detector_path(@account, @detector), notice: 'Detector was successfully created.'
     else
       render :new
     end
@@ -40,7 +40,7 @@ class DetectorsController < CornerkickController
   def update
     authorize @detector
     if @detector.update(detector_params)
-      redirect_to cornerkick.account_detector_path(@account, @detector), notice: 'Detector was successfully updated.'
+      redirect_to account_detector_path(@account, @detector), notice: 'Detector was successfully updated.'
     else
       render :edit
     end
@@ -50,7 +50,7 @@ class DetectorsController < CornerkickController
   def destroy
     authorize @detector
     @detector.destroy
-    redirect_to cornerkick.account_detectors_url(@account), notice: 'Detector was successfully destroyed.'
+    redirect_to account_detectors_url(@account), notice: 'Detector was successfully destroyed.'
   end
 
   private

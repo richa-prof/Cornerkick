@@ -1,0 +1,165 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item= link_to 'Campaigns', account_campaigns_path(@campaign.account)
+    %li.breadcrumb-item= @campaign.name
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_campaign_campaign_ad_path(@account, @campaign)}
+          %i.fa.fa-eye
+          Create Ad
+        %a.btn.btn-secondary{href: new_account_campaign_campaign_source_path(@account, @campaign)}
+          %i.fa.fa-coffee
+          Create Source
+        %a.btn.btn-secondary{href: new_account_campaign_campaign_target_path(@account, @campaign)}
+          %i.fa.fa-bullseye
+          Create Target
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-campaigns-show', @campaign] do
+  #campaigns-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Campaign
+            %a.btn.btn-link.float-right{href: edit_account_campaign_path(@account, @campaign)}
+              %i.fa.fa-pencil-square-o
+          .card-block
+            %p
+              %b Name:
+              = @campaign.name
+            %p
+              %b Active:
+              = @campaign.active
+            %p
+              %b Started at:
+              = @campaign.started_at
+            %p
+              %b Ended at:
+              = @campaign.ended_at
+
+
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            %i.fa.fa-bullseye
+            Campaign Targets
+            %a.btn.btn-link.float-right{href: new_account_campaign_campaign_target_path(@account, @campaign)}
+              %i.fa.fa-plus
+          .card-block
+            - if @campaign.campaign_targets.count == 0
+              %a.btn.btn-secondary{href: new_account_campaign_campaign_target_path(@account, @campaign)}
+                %i.fa.fa-bullseye
+                Create Campaign Target
+            - else
+              %table#campaign-targets.table.table-striped.table-hover.ml-auto
+                %thead
+                  %tr
+                    %th Landing Page
+                    %th
+
+                %tbody
+                - @campaign.campaign_targets.each do |target|
+                  - cache ['campaign-campaign-target', target] do
+                    %tr
+                      %td= link_to target.landing_page, account_campaign_campaign_target_path(target.account, target.campaign, target)
+                      %td
+                        %a{href: edit_account_campaign_campaign_target_path(target.account, target.campaign, target)}
+                          %i.fa.fa-lg.fa-pencil-square-o
+                        %a{href: account_campaign_campaign_target_path(target.account, target.campaign, target), data: { confirm: 'Are you sure?', method: :delete } }
+                          %i.fa.fa-lg.fa-minus-square-o
+
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            %i.fa.fa-coffee
+            Campaign Sources
+            %a.btn.btn-link.float-right{href: new_account_campaign_campaign_source_path(@account, @campaign)}
+              %i.fa.fa-plus
+          .card-block
+            - if @campaign.campaign_sources.count == 0
+              %a.btn.btn-secondary{href: new_account_campaign_campaign_source_path(@account, @campaign)}
+                %i.fa.fa-coffee
+                Create Campaign Source
+            - else
+              %table#campaign-sources.table.table-striped.table-hover.ml-auto
+                %thead
+                  %tr
+                    %th Name
+                    %th
+
+                %tbody
+                - @campaign.campaign_sources.each do |source|
+                  - cache ['campaign-campaign-source', source] do
+                    %tr
+                      %td= link_to source.name, account_campaign_campaign_source_path(source.account, source.campaign, source)
+                      %td
+                        %a{href: edit_account_campaign_campaign_source_path(source.account, source.campaign, source)}
+                          %i.fa.fa-lg.fa-pencil-square-o
+                        %a{href: account_campaign_campaign_source_path(source.account, source.campaign, source), data: { confirm: 'Are you sure?', method: :delete } }
+                          %i.fa.fa-lg.fa-minus-square-o
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            %i.fa.fa-eye
+            Campaign Ads
+            %a.btn.btn-link.float-right{href: new_account_campaign_campaign_ad_path(@account, @campaign)}
+              %i.fa.fa-plus
+          .card-block
+            - if @campaign.campaign_ads.count == 0
+              %a.btn.btn-secondary{href: new_account_campaign_campaign_ad_path(@account, @campaign)}
+                %i.fa.fa-eye
+                Create Campaign Ad
+            - else
+              %table#campaign-ads.table.table-striped.table-hover.ml-auto
+                %thead
+                  %tr
+                    %th Name
+                    %th
+
+                %tbody
+                  - @campaign.campaign_ads.each do |ad|
+                    - cache ['campaign-campaign-ad', ad] do
+                      %tr
+                        %td= link_to ad.name, account_campaign_campaign_ad_path(ad.account, ad.campaign, ad)
+                        %td
+                          %a{href: edit_account_campaign_campaign_ad_path(ad.account, ad.campaign, ad)}
+                            %i.fa.fa-lg.fa-pencil-square-o
+                          %a{href: account_campaign_campaign_ad_path(ad.account, ad.campaign, ad), data: { confirm: 'Are you sure?', method: :delete } }
+                            %i.fa.fa-lg.fa-minus-square-o
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-header
+            %i.fa.fa-globe
+            Campaign URLs
+            %a.btn.btn-link.float-right{href: generate_urls_account_campaign_path(@account, @campaign), data: { method: :post }}
+              %i.fa.fa-wrench
+              Generate URLs
+          .card-block
+            %table#campaign-urls.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th URL
+                  %th Visits
+                  %th Group
+                  %th
+
+              %tbody
+              - @campaign.campaign_urls.each do |url|
+                - cache ['campaign-campaign-url', url] do
+                  %tr
+                    %td= url.url
+                    %td= 0
+                    %td= url_group_display_name url
+                    %td
+                      %a{href: edit_account_campaign_campaign_url_path(url.account, url.campaign, url)}
+                        %i.fa.fa-lg.fa-pencil-square-o
+                      %a{href: account_campaign_campaign_url_path(url.account, url.campaign, url), data: { confirm: 'Are you sure?', method: :delete } }
+                        %i.fa.fa-lg.fa-minus-square-o

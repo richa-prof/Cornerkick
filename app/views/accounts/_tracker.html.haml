@@ -1,0 +1,15 @@
+.card-header
+  = tracker.identifier
+.card-block
+  %pre
+    %code
+      :preserve
+        &lt;script type="text/javascript"&gt;
+          !function(e, n, t, c, i, o) {
+            window.ckId = c, window.ckDomain = t, i = e.getElementsByTagName(n)[0], (o = e.createElement(n)).async = !0,
+            o.src = "https://" + t + "/lib.min.js", i.parentNode.insertBefore(o, i);
+          }(document, "script", "#{request.host_with_port}", "#{tracker.identifier}");
+        &lt;/script&gt;
+
+.card-footer
+  Add this snippet to the &lt;head&gt; tag on each page of your site.

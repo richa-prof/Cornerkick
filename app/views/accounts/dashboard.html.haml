@@ -1,0 +1,87 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Dashboard
+
+- content_for :sidebar_nav do
+  = render 'shared/main_sidebar_nav'
+
+- cache ['account-dashboard', @account, @account.contacts] do # need a better cache key.  this one is probably always invalidated.
+  #dashboard
+    .row
+      .col-md-4.col-sm-12
+        .card.card-success.card-inverse
+          .card-header
+            Contacts
+          .card-block.text-center
+            .h2.py-1
+              = @account.contacts.count
+            .chart-wrapper
+              %canvas#chart-1.chart.chart-bar{height:'40', weight:'40'}
+      .col-md-4.col-sm-12
+        .card.card-success.card-inverse
+          .card-header
+            Visits
+          .card-block.text-center
+            .h2.py-1
+              = @visit_count
+            .chart-wrapper
+              %canvas#chart-2.chart.chart-bar{height:'40', weight:'40'}
+      .col-md-4.col-sm-12
+        .card.card-success.card-inverse
+          .card-header
+            Clicks
+          .card-block.text-center
+            .h2.py-1
+              = @click_count
+            .chart-wrapper
+              %canvas#chart-3.chart.chart-bar{height:'40', weight:'40'}
+    .row
+      - cache ['recent-contacts', @recent] do
+        .col-md-6.col-sm-12
+          .card.card-accent-success
+            .card-header
+              Recent
+            .card-block
+              %table#recent-contacts.table.table-striped.table-hover.ml-auto
+                %thead
+                  %tr
+                    %th Contact
+                    %th Time
+
+                %tbody
+                  - @recent.each do |contact|
+                    %tr
+                      %td= link_to contact.display_name, account_contact_path(@account, contact)
+                      %td= contact.updated_at
+      -#- cache ['frequent-contacts', @recent] do
+      -#  .col-md-6.col-sm-12
+      -#    .card.card-accent-success
+      -#      .card-header
+      -#        Frequent
+      -#      .card-block
+      -#        %table#frequent-contacts.table.table-striped.table-hover.ml-auto
+      -#          %thead
+      -#            %tr
+      -#              %th Contact
+      -#              %th Visits
+      -#
+      -#          %tbody
+      -#            - @recent.each do |contact|
+      -#              %tr
+      -#                %td= link_to contact.display_name, account_contact_path(@account, contact)
+      -#                %td= contact.updated_at
+
+    .row
+      - @account.trackers.each do |t|
+        .card.col-8.offset-2.card-accent-success
+          = render partial: 'tracker', locals: {tracker: t}
+
+    -#.row
+    -#  .card
+    -#    .card-header Contacts
+    -#    .card-block
+    -#      %ul.list-group
+    -#        - @account.contacts.order(created_at: :desc).limit(5) do |c|
+    -#          %li.list-group-item.justify-content-between
+    -#            = c.display_name

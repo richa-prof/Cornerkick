@@ -1,0 +1,42 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Campaigns
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_campaign_path(@account)}
+          %i.fa.fa-bullhorn
+          Create Campaign
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-campaigns-index', @campaigns, params[:page]] do
+  #campaigns-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table#campaigns.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Name
+                  %th Active
+                  %th Started At
+                  %th Ended At
+                  %th
+
+              %tbody
+                - @campaigns.each do |campaign|
+                  %tr
+                    %td= link_to campaign.name, account_campaign_path(@account, campaign)
+                    %td= campaign.active
+                    %td= campaign.started_at
+                    %td= campaign.ended_at
+                    %td
+                      %a{href: edit_account_campaign_path(@account, campaign)}
+                        %i.fa.fa-lg.fa-pencil-square-o
+                      %a{href: account_campaign_path(@account, campaign), data: { confirm: 'Are you sure?', method: :delete } }
+                        %i.fa.fa-lg.fa-minus-square-o

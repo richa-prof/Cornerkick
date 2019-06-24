@@ -1,0 +1,40 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Detectors
+    %li.breadcrumb-item= @detector.name
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_detector_path(@account)}
+          %i.fa.fa-user-plus
+          Create Detector
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-detectors-show', @detector, params[:page]] do
+  #detectors-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Detector
+          .card-block
+            %p
+              %b Name:
+              = @detector.name
+            %p
+              %b Description:
+              = @detector.description
+            %p
+              %b Active:
+              = @detector.active
+
+          .card-footer
+            = link_to 'Edit', edit_account_detector_path(@account, @detector)
+            \|
+            = link_to 'Back', account_detectors_path(@account)
+
+

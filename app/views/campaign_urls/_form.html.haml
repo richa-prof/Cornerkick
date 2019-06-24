@@ -1,0 +1,17 @@
+- url = if @campaign_url.id.nil? then account_campaign_campaign_urls_path(@campaign.account, @campaign) else account_campaign_campaign_url_path(@campaign.account, @campaign, @campaign_url) end
+= form_for @campaign_url, url: url do |f|
+  - if @campaign_url.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@campaign_url.errors.count, "error")} prohibited this campaign_url from being saved:"
+      %ul
+        - @campaign_url.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :url
+    = f.text_field :url, class: 'form-control'
+  %fieldset.form-group
+    = f.label :group_id, 'Group'
+    = f.collection_select(:group_id, @groups, :id, :name, {}, class: 'form-control')
+  .actions
+    = f.submit 'Save'

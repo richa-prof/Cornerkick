@@ -1,0 +1,9 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+
+- content_for :sidebar_nav do
+  = render 'shared/main_sidebar_nav'
+
+#account
+  %h1 Accounts Show

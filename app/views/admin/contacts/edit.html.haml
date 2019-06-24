@@ -1,0 +1,25 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_contacts_path} Contacts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_contact_path}
+          %i.fa.fa-user-plus
+          Create Contact
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+
+#contacts-edit
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          Edit Contact
+        .card-block
+          = render 'form'

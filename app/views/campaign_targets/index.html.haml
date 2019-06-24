@@ -1,0 +1,30 @@
+- content_for :breadcrumb do
+  - cache ['campaign-target-breadcrumb', @campaign] do
+    = render 'breadcrumb'
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+
+- cache ['account-campaign-campaign-targets-index', @campaign_targets] do
+  #campaign-targets-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table#campaign-targets.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Landing Page
+                  %th
+
+              %tbody
+                - @campaign_targets.each do |target|
+                  %tr
+                    %td= link_to target.landing_page, account_campaign_campaign_target_path(target.account, target.campaign, target)
+                    %td
+                      %a{href: edit_account_campaign_campaign_target_path(target.account, target.campaign, target)}
+                        %i.fa.fa-lg.fa-pencil-square-o
+                      %a{href: account_campaign_campaign_target_path(target.account, target.campaign, target), data: { confirm: 'Are you sure?', method: :delete } }
+                        %i.fa.fa-lg.fa-minus-square-o

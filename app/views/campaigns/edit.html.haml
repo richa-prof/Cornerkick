@@ -1,0 +1,28 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item= link_to 'Campaigns', account_campaigns_path(@campaign.account)
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_campaign_path(@account)}
+          %i.fa.fa-bullhorn
+          Create Campaign
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+
+#campaigns-edit
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          Campaign
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Show', account_campaign_path(@account, @campaign)
+          \|
+          = link_to 'Back', account_campaigns_path(@account)

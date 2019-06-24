@@ -1,0 +1,27 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_accounts_path} Accounts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_account_path}
+          %i.fa.fa-user-plus
+          Create Account
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+-# content_for :sidebar_subnav do
+
+#accounts-new
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          New Account
+        .card-block
+          = render 'form'
+

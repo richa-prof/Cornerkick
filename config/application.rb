@@ -16,4 +16,7 @@ module Cornerkick
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
   end
+
+  PIXEL_IMG = ['89504e470d0a1a0a0000000d4948445200000001000000010100000000376ef9240000001049444154789c626001000000ffff03000006000557bfabd40000000049454e44ae426082'].pack('H*')
+  TRACKER_COOKIE_NAME = '_cornerkick'.freeze
 end

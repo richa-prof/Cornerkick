@@ -1,0 +1,27 @@
+- url = if @contact.id.nil? then admin_contacts_path else admin_contact_path(@contact) end
+= form_for @contact, url: url do |f|
+  - if @contact.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@contact.errors.count, "error")} prohibited this contact from being saved:"
+      %ul
+        - @contact.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :first_name
+    = f.text_field :first_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
+  %fieldset.form-group
+    = f.label :email
+    = f.text_field :email, class: 'form-control'
+  %fieldset.form-group
+    = f.label :phone
+    = f.text_field :phone, class: 'form-control'
+  %fieldset.form-group
+    = f.label :account_id, 'Account'
+    = f.collection_select(:account_id, Account.all, :id, :name, {}, class: 'form-control')
+  %fieldset.form-group
+  %button.btn.btn-primary{type: 'submit'}
+    Save

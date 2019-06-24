@@ -1,0 +1,28 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_groups_path} Users
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_user_path}
+          %i.fa.fa-user-plus
+          Create User
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+#users-edit
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          New User
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Show', admin_user_path(@user)
+          \|
+          = link_to 'Back', admin_users_path

@@ -1,0 +1,21 @@
+- content_for :breadcrumb do
+  - cache ['campaign-url-breadcrumb', @campaign] do
+    = render 'breadcrumb'
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+
+#campaign-urls-edit
+  .row
+    .col-md-12
+      .card.card-accent-success
+        .card-header
+          Campaign URL
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Show', account_campaign_campaign_url_path(@campaign.account, @campaign, @campaign_url)
+          \|
+          = link_to 'Back', account_campaign_path(@campaign.account, @campaign)

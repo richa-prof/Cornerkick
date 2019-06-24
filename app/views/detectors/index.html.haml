@@ -1,0 +1,41 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Detectors
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_detector_path(@account)}
+          %i.fa.fa-user-plus
+          Create Detector
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-detectors-index', @detectors, params[:page]] do
+  #detectors-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table#detectors.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th Name
+                  %th Description
+                  %th Active
+                  %th
+
+              %tbody
+                - @detectors.each do |detector|
+                  %tr
+                    %td= link_to detector.name, account_detector_path(@account, detector)
+                    %td= detector.description
+                    %td= detector.active
+                    %td
+                      %a{href: edit_account_detector_path(@account, detector)}
+                        %i.fa.fa-lg.fa-pencil-square-o
+                      %a{href: account_detector_path(@account, detector), data: { confirm: 'Are you sure?', method: :delete } }
+                        %i.fa.fa-lg.fa-minus-square-o
+

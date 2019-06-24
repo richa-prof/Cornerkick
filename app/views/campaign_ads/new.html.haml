@@ -1,0 +1,18 @@
+- content_for :breadcrumb do
+  - cache ['campaign-ad-breadcrumb', @campaign] do
+    = render 'breadcrumb'
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+#campaign-ads-new
+  .row
+    .col-md-12
+      .card.card-accent-success
+        .card-header
+          New Campaign Ad
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Back', account_campaign_path(@campaign.account, @campaign)

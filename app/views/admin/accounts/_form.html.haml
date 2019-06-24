@@ -1,0 +1,16 @@
+- url = if @account.id.nil? then admin_accounts_path else admin_account_path(@account) end
+= form_for @account, url: url do |f|
+  - if @account.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
+      %ul
+        - @account.errors.full_messages.each do |message|
+          %li= message
+
+  %fieldset.form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control', placeholder: 'name'
+
+  %fieldset.form-group
+    %button.btn.btn-primary{type: 'submit'}
+      Save

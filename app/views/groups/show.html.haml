@@ -1,0 +1,67 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Groups
+    %li.breadcrumb-item= @group.name
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_group_path(@account)}
+          %i.fa.fa-user-plus
+          Create Group
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+- cache ['account-groups-show', @group, params[:page]] do
+  #groups-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Group
+          .card-block
+            %p
+              %b Name:
+              = @group.name
+            %p
+              %b Description:
+              = @group.description
+
+          .card-footer
+            = link_to 'Edit', edit_account_group_path(@account, @group)
+            \|
+            = link_to 'Back', account_groups_path(@account)
+
+    - cache ['account-groups-show-contacts', @contacts, params[:page]] do
+      .row
+        .col-md-12
+          .card.card-accent-success
+            .card-block
+              %table#contacts.table.table-striped.table-hover.ml-auto
+                %thead
+                  %tr
+                    %th First name
+                    %th Last name
+                    %th Email
+                    %th Phone
+                    %th
+                    %th
+                    %th
+
+                %tbody
+                  - @contacts.each do |contact|
+                    - cache ['contacts-index', contact] do
+                      %tr
+                        %td= contact.first_name
+                        %td= contact.last_name
+                        %td= contact.email
+                        %td= contact.phone
+                        %td= link_to 'Show', account_contact_path(@account, contact)
+                        %td= link_to 'Edit', edit_account_contact_path(@account, contact)
+                        %td= link_to 'Destroy', account_contact_path(@account, contact), method: :delete, data: { confirm: 'Are you sure?' }
+
+            .card-footer
+              = paginate @contacts
+

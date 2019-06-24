@@ -1,0 +1,39 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item
+      %a{href: admin_groups_path} Groups
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_group_path}
+          %i.fa.fa-user-plus
+          Create Group
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+-# content_for :sidebar_subnav do
+
+- cache ['groups-show', @group] do
+  #groups-show
+    .row
+      .col-md-6
+        .card.card-accent-success
+          .card-header
+            Group
+          .card-block
+            %p
+              %b Name:
+              = @group.name
+            %p
+              %b Description:
+              = @group.description
+            %p
+              %b Account:
+              = @group.account
+          .card-footer
+            = link_to 'Edit', edit_admin_group_path(@group)
+            \|
+            = link_to 'Back', admin_groups_path

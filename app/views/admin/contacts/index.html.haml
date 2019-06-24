@@ -1,0 +1,50 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item Cornerkick
+    %li.breadcrumb-item Contacts
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_admin_contact_path}
+          %i.fa.fa-user-plus
+          Create Contact
+
+- content_for :sidebar_nav do
+  - cache 'admin_sidebar_nav' do
+    = render 'admin/admin_sidebar_nav'
+
+-# content_for :sidebar_subnav do
+
+- cache ['admin-contact-index', @contacts, params[:page]] do
+  #contacts-index
+    .row
+      .col-md-12
+        .card.card-accent-success
+          .card-block
+            %table.table.table-striped.table-hover.ml-auto
+              %thead
+                %tr
+                  %th First name
+                  %th Last name
+                  %th Email
+                  %th Phone
+                  %th Account
+                  %th
+                  %th
+                  %th
+
+              %tbody
+                - @contacts.each do |contact|
+                  - cache ['contacts-index', contact] do
+                    %tr
+                      %td= contact.first_name
+                      %td= contact.last_name
+                      %td= contact.email
+                      %td= contact.phone
+                      %td= contact.account.name
+                      %td= link_to 'Show',  admin_contact_path(contact)
+                      %td= link_to 'Edit', edit_admin_contact_path(contact)
+                      %td= link_to 'Destroy',  admin_contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' }
+
+          .card-footer
+            = paginate @contacts

@@ -31,7 +31,7 @@ class CampaignsController < CornerkickController
     authorize @campaign
 
     if @campaign.save
-      redirect_to cornerkick.account_campaign_path(@account, @campaign), notice: 'Campaign was successfully created.'
+      redirect_to account_campaign_path(@account, @campaign), notice: 'Campaign was successfully created.'
     else
       render :new
     end
@@ -41,7 +41,7 @@ class CampaignsController < CornerkickController
   def update
     authorize @campaign
     if @campaign.update(campaign_params)
-      redirect_to cornerkick.account_campaign_path(@account, @campaign), notice: 'Campaign was successfully updated.'
+      redirect_to account_campaign_path(@account, @campaign), notice: 'Campaign was successfully updated.'
     else
       render :edit
     end
@@ -51,14 +51,14 @@ class CampaignsController < CornerkickController
   def destroy
     authorize @campaign
     @campaign.destroy
-    redirect_to cornerkick.account_campaigns_url(@account), notice: 'Campaign was successfully destroyed.'
+    redirect_to account_campaigns_url(@account), notice: 'Campaign was successfully destroyed.'
   end
 
   # POST /accounts/1/campaigns/1/generate_urls
   def generate_urls
     authorize @campaign
     @campaign.generate_campaign_urls
-    redirect_to cornerkick.account_campaign_url(@account, @campaign), notice: 'Campaign URLs generated successfully'
+    redirect_to account_campaign_url(@account, @campaign), notice: 'Campaign URLs generated successfully'
   end
 
   private

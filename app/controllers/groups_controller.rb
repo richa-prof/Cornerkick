@@ -31,7 +31,7 @@ class GroupsController < CornerkickController
     authorize @group
 
     if @group.save
-      redirect_to cornerkick.account_group_path(@account, @group), notice: 'Group was successfully created.'
+      redirect_to account_group_path(@account, @group), notice: 'Group was successfully created.'
     else
       render :new
     end
@@ -41,7 +41,7 @@ class GroupsController < CornerkickController
   def update
     authorize @group
     if @group.update(group_params)
-      redirect_to cornerkick.account_group_path(@account, @group), notice: 'Group was successfully updated.'
+      redirect_to account_group_path(@account, @group), notice: 'Group was successfully updated.'
     else
       render :edit
     end
@@ -51,7 +51,7 @@ class GroupsController < CornerkickController
   def destroy
     authorize @group
     @group.destroy
-    redirect_to cornerkick.account_groups_url(@account), notice: 'Group was successfully destroyed.'
+    redirect_to account_groups_url(@account), notice: 'Group was successfully destroyed.'
   end
 
   private

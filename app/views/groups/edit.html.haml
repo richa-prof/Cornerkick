@@ -1,0 +1,27 @@
+- content_for :breadcrumb do
+  %ol.breadcrumb
+    %li.breadcrumb-item= @account.name
+    %li.breadcrumb-item Groups
+
+    %li.breadcrumb-menu
+      .btn-group
+        %a.btn.btn-secondary{href: new_account_group_path(@account)}
+          %i.fa.fa-user-plus
+          Create Group
+
+- content_for :sidebar_nav do
+  - cache ['main_sidebar_nav', @current_account] do
+    = render 'shared/main_sidebar_nav'
+
+#groups-edit
+  .row
+    .col-md-6
+      .card.card-accent-success
+        .card-header
+          Group
+        .card-block
+          = render 'form'
+        .card-footer
+          = link_to 'Show', account_group_path(@account, @group)
+          \|
+          = link_to 'Back', account_groups_path(@account)
