@@ -5,7 +5,7 @@
     %link{href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', rel: 'stylesheet', integrity: 'sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN', crossorigin: 'anonymous'}
     %link{href: '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', rel: 'stylesheet'}
     %link{href: 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css', rel: 'stylesheet'}
-    = stylesheet_link_tag    'application', media: 'all'
+    = stylesheet_link_tag 'application', media: 'all'
 
     %script{crossorigin: 'anonymous', integrity: 'sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', src: 'https://code.jquery.com/jquery-3.2.1.min.js'}
     %script{crossorigin: 'anonymous', integrity: 'sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=', src: 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'}
@@ -14,6 +14,7 @@
     %script{crossorigin: 'anonymous', integrity: 'sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'}
 
     = javascript_pack_tag 'application'
+    = javascript_pack_tag 'legacy'
     = csrf_meta_tags
 
   %body.app.header-fixed.aside-menu-fixed.aside-menu-hidden
@@ -29,9 +30,9 @@
       - if user_signed_in?
         %ul.nav.navbar-nav.ml-auto
           %li.nav-item.dropdown.hidden-md-down
-            %a.nav-link
-              %i.fa.fa-bell-o
-              %span.badge.badge-pill.badge-danger 5
+            -#%a.nav-link
+            -#  %i.fa.fa-bell-o
+              -#%span.badge.badge-pill.badge-danger 5
           %li.nav-item.dropdown
             %a.nav-link.dropdown-toggle.nav-link{href: '#', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } }
               %span.hidden-md-down
@@ -65,7 +66,7 @@
                 %i.fa.fa-lock
                 Logout
           %li.nav-item.hidden-md-down
-            %a.nav-link.navbar-toggler.aside-menu-toggler{href: '#'} ☰
+            -#%a.nav-link.navbar-toggler.aside-menu-toggler{href: '#'} ☰
 
 
 
@@ -96,20 +97,20 @@
 
           = yield
 
-      %aside.aside-menu
-        .callout.m-0.py-h.text-muted.text-center.bg-faded.text-uppercase
-          %small
-            %b Today
-        %hr.transparent.mx-1.my-0
-        .callout.callout-warning.m-0.py-1
-          %div
-            Meeting
-          %small.text-muted.mr-1
-            %i.fa.fa-calendar
-            1 - 3pm
-          %small.text-muted
-            %i.fa.fa-map-pin
-              Portland, OR
+      -#%aside.aside-menu
+      -#  .callout.m-0.py-h.text-muted.text-center.bg-faded.text-uppercase
+      -#    %small
+      -#      %b Today
+      -#  %hr.transparent.mx-1.my-0
+      -#  .callout.callout-warning.m-0.py-1
+      -#    %div
+      -#      Meeting
+      -#    %small.text-muted.mr-1
+      -#      %i.fa.fa-calendar
+      -#      1 - 3pm
+      -#    %small.text-muted
+      -#      %i.fa.fa-map-pin
+      -#        Portland, OR
 
 
     %footer.app-footer

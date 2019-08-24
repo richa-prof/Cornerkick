@@ -1,7 +1,6 @@
 class AccountsController < CornerkickController
   before_action :set_account, except: %i[edit_current_account update_current_account]
 
-  layout 'legacy'
   def dashboard
     authorize @account
 

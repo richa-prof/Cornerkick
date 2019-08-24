@@ -3,6 +3,8 @@ module Admin
   class AdminController < ApplicationController
     include Pundit
 
+    layout 'legacy'
+
     protect_from_forgery with: :exception
 
     before_action :authenticate_user!
