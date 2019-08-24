@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_204648) do
+ActiveRecord::Schema.define(version: 2019_07_14_165256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,14 @@ ActiveRecord::Schema.define(version: 2019_06_23_204648) do
     t.index ["account_id"], name: "index_detectors_on_account_id"
   end
 
+  create_table "domains", force: :cascade do |t|
+    t.string "name"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_domains_on_account_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "url"
     t.string "referrer"
@@ -193,6 +201,31 @@ ActiveRecord::Schema.define(version: 2019_06_23_204648) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ip_address"], name: "index_ip_addresses_on_ip_address"
+  end
+
+  create_table "page_stats", force: :cascade do |t|
+    t.bigint "page_id", null: false
+    t.date "stat_date"
+    t.bigint "campaign_id"
+    t.bigint "campaign_source_id"
+    t.bigint "campaign_ad_id"
+    t.integer "visitor_count"
+    t.integer "new_visitor_count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_ad_id"], name: "index_page_stats_on_campaign_ad_id"
+    t.index ["campaign_id"], name: "index_page_stats_on_campaign_id"
+    t.index ["campaign_source_id"], name: "index_page_stats_on_campaign_source_id"
+    t.index ["page_id"], name: "index_page_stats_on_page_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "path"
+    t.string "title"
+    t.bigint "domain_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["domain_id"], name: "index_pages_on_domain_id"
   end
 
   create_table "role_assignments", force: :cascade do |t|
@@ -283,12 +316,18 @@ ActiveRecord::Schema.define(version: 2019_06_23_204648) do
   add_foreign_key "detector_results", "detectors"
   add_foreign_key "detector_results", "events"
   add_foreign_key "detectors", "accounts"
+  add_foreign_key "domains", "accounts"
   add_foreign_key "events", "browsers"
   add_foreign_key "events", "contacts"
   add_foreign_key "events", "ip_addresses"
   add_foreign_key "groupings", "contacts"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groups", "accounts"
+  add_foreign_key "page_stats", "campaign_ads"
+  add_foreign_key "page_stats", "campaign_sources"
+  add_foreign_key "page_stats", "campaigns"
+  add_foreign_key "page_stats", "pages"
+  add_foreign_key "pages", "domains"
   add_foreign_key "role_assignments", "accounts"
   add_foreign_key "role_assignments", "roles"
   add_foreign_key "role_assignments", "users"
